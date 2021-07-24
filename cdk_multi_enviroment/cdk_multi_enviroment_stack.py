@@ -29,3 +29,7 @@ class CdkMultiEnviromentStack(cdk.Stack):
         # bucket_imported = _s3.Bucket.from_bucket_name(self, "MyImportedBucket",
         #                             "bucket_name_to_import"
         #                             )
+        # vpc2 = _ec2.Vpc.from_lookup(self, "importedVpc",
+        # # is_default=True, or
+        # vpc_id="vpc_id_to_import"
+        # )
