@@ -14,7 +14,8 @@ from cdk_multi_enviroment.cdk_multi_enviroment_stack import CdkMultiEnviromentSt
 env_US = core.Environment(region="us-east-1")
 env_EU = core.Environment(region="eu-west-1")
 app = core.App()
-CdkMultiEnviromentStack(app, "CdkMultiEnviromentStackDEV", env = env_US)
-CdkMultiEnviromentStack(app, "CdkMultiEnviromentStackPROD", env = env_EU, is_prod = True)
-
+CdkMultiEnviromentStack(app, "CdkMultiEnviromentStackDEV", env=env_US)
+CdkMultiEnviromentStack(
+    app, "CdkMultiEnviromentStackPROD", env=env_EU, is_prod=True)
+test
 app.synth()
