@@ -17,5 +17,5 @@ app = core.App()
 CdkMultiEnviromentStack(app, "CdkMultiEnviromentStackDEV", env=env_US)
 CdkMultiEnviromentStack(
     app, "CdkMultiEnviromentStackPROD", env=env_EU, is_prod=True)
-test
+
 app.synth()
