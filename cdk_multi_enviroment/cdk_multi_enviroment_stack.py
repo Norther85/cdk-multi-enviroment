@@ -33,7 +33,17 @@ class CdkMultiEnviromentStack(cdk.Stack):
                                     {"eu-west-1": "ami-058b1b7fe545997ae"}),
                                 user_data=_ec2.UserData.custom(user_data)
                                 )
+            ec2.connections.allow_from_any_ipv4(
+                _ec2.Port.tcp(80), description="Web traffic")
 
+            ec2.instance.add_property_override(
+                "BlockDeviceMappings", [
+                    {
+                        "DeviceName": "/dev/sdb",
+                        "Ebs": {"VolumeSize": "8"}
+                    }
+                ]
+            )
             # vpc = _ec2.Vpc(self, "MyVPCPROD",
             #                cidr="10.0.0.0/16"
             #                )
