@@ -11,8 +11,8 @@ from aws_cdk import core
 
 from cdk_multi_enviroment.cdk_multi_enviroment_stack import CdkMultiEnviromentStack
 
-env_US = core.Environment(region="us-east-1")
-env_EU = core.Environment(region="eu-west-1")
+env_US = core.Environment(account="748199111232", region="us-east-1")
+env_EU = core.Environment(account="748199111232", region="eu-west-1")
 app = core.App()
 CdkMultiEnviromentStack(app, "CdkMultiEnviromentStackDEV", env=env_US)
 CdkMultiEnviromentStack(

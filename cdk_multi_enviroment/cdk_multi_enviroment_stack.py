@@ -13,14 +13,31 @@ class CdkMultiEnviromentStack(cdk.Stack):
 
     def __init__(self, scope: cdk.Construct, construct_id: str, is_prod=False, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-        prod_confs = self.node.try_get_context('envs')['dev']
-        print(prod_confs)
+
         # The code that defines your stack goes here
         if is_prod:
-            vpc = _ec2.Vpc(self, "MyVPCPROD",
-                           cidr="10.0.0.0/16"
-                           )
-            tag_vpc = core.Tags.of(vpc).add("Owner", "Tomasz Czekaj")
+            # user data script
+            with open("bootstrap_scripts/install.sh", mode="r") as file:
+                user_data = file.read()
+
+            print(user_data)
+
+            vpc = _ec2.Vpc.from_lookup(self, "MyVPC", is_default=True)
+            ec2 = _ec2.Instance(self, "MyInstance",
+                                instance_type=_ec2.InstanceType(
+                                    instance_type_identifier="t2.nano"),
+                                vpc=vpc,
+                                vpc_subnets=_ec2.SubnetSelection(
+                                    subnet_type=_ec2.SubnetType.PUBLIC),
+                                machine_image=_ec2.MachineImage.generic_linux(
+                                    {"eu-west-1": "ami-058b1b7fe545997ae"}),
+                                user_data=_ec2.UserData.custom(user_data)
+                                )
+
+            # vpc = _ec2.Vpc(self, "MyVPCPROD",
+            #                cidr="10.0.0.0/16"
+            #                )
+            # tag_vpc = core.Tags.of(vpc).add("Owner", "Tomasz Czekaj")
         else:
             vpc = _ec2.Vpc(self, "MyVPCDEV",
                            cidr="10.0.0.0/16"
